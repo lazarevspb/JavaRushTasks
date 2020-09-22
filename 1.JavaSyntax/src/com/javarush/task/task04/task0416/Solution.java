@@ -9,7 +9,11 @@ import java.io.InputStreamReader;
 
 public class Solution {
     public static void main(String[] args) throws Exception {
-        //напишите тут ваш код
-
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int i  = (int)Double.parseDouble(reader.readLine());
+         i %= 5;
+        if(i>=0 && i <3) System.out.println("зелёный");
+        if(i == 3) System.out.println("жёлтый");
+        if(i == 4) System.out.println("красный");
     }
 }
