@@ -9,6 +9,12 @@ import java.io.InputStreamReader;
 
 public class Solution {
     public static void main(String[] args) throws Exception {
-BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String s = new BufferedReader(new InputStreamReader(System.in)).readLine();
+        int a = Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
+
+        if (a > 20){
+            System.out.println("И 18-ти достаточно");
+        }
+
     }
 }
