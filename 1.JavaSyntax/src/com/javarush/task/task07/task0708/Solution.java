@@ -22,12 +22,8 @@ public class Solution {
         for (int i = 0; i < 5; i++) {
             strings.add(reader.readLine().trim());
             if (i != 0) {
-                if (strings.get(i).length() > lengthMax) {
-                    lengthMax = strings.get(i).length();
-                }
-            } else {
-                lengthMax = strings.get(i).length();
-            }
+                if (strings.get(i).length() > lengthMax) lengthMax = strings.get(i).length();
+            }else lengthMax = strings.get(i).length();
         }
         for (int i = 0; i < 5; i++) {
             if (strings.get(i).length() >= lengthMax) {
