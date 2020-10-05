@@ -26,7 +26,7 @@ public class Solution {
                 .stream()
                 .max(Comparator.comparing(String::length)).get().length();
 
-        for (String s : arrayList) {
+                for (String s : arrayList) {
             if (s.length() == minLength) {
                 System.out.println(s);
                 break;
