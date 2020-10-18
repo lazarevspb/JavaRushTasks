@@ -7,51 +7,131 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MinesweeperGame extends Game {
-    private static final int SIDE = 9;
-    private GameObject[][] gameField = new GameObject[SIDE][SIDE];
-    private int countMinesOnField;
-
     private static final String MINE = "\uD83D\uDCA3";
+    private static final String FLAG = "\uD83D\uDEA9";
+    private static final int SIDE = 9;
+    private int score;
+    private GameObject[][] gameField = new GameObject[SIDE][SIDE];
+    private int countClosedTiles = SIDE * SIDE;
+    private int countMinesOnField; // количество сгенерированных мин
+    private int countFlags; //приватное поле countFlags типа int,  в котором будет храниться количество неиспользованных флагов.
+
+    private boolean isGameStopped;
 
 
     @Override
     public void initialize() {
+        /*Для указания размерности в движке существует метод setScreenSize(int, int),
+        который принимает параметрами ширину и высоту (количество ячеек по ширине и высоте).*/
         setScreenSize(SIDE, SIDE);
         createGame();
     }
 
-    private void openTile(int x, int y) {
-        GameObject gameObject = gameField[y][x];
+    @Override
+    public void onMouseLeftClick(int x, int y) {
 
-        if (gameObject.isMine) {
-            setCellValue(gameObject.x, gameObject.y, MINE);
+        if(!isGameStopped){
+            openTile(x, y);
         } else {
-            setCellNumber(x, y, gameObject.countMineNeighbors);
+            restart();
+            return;
         }
-        gameObject.isOpen = true;
-        setCellColor(x, y, Color.GREEN);
-
     }
 
     @Override
-    public void onMouseLeftClick(int x, int y) {
-        openTile(x, y);
+    public void onMouseRightClick(int x, int y) {
+        markTile(x, y);
     }
 
-    private void createGame() {
-        for (int y = 0; y < SIDE; y++) {
+    private void gameOver() {
+        isGameStopped = true;
+        showMessageDialog(Color.RED, "Это конец!", Color.BLACK, 50);
+    }
 
-            for (int x = 0; x < SIDE; x++) {
-                boolean isMine = getRandomNumber(10) < 1;
-                if (isMine) {
-                    countMinesOnField++;
-                }
-                gameField[y][x] = new GameObject(x, y, isMine);
-                setCellColor(x, y, Color.ORANGE);
+    private void restart() {
+        isGameStopped = false;
+        countClosedTiles = SIDE * SIDE;
+        score = 0;
+        countMinesOnField = 0;
+        setScore(score);
+        createGame();
 
-            }
+    }
+
+    private void win() {
+        isGameStopped = true;
+        showMessageDialog(Color.DEEPSKYBLUE, "Победа", Color.AQUA, 70);
+    }
+
+    private void openTile(int x, int y) {  // открытие ячейки
+        GameObject gameObject = gameField[y][x];
+
+        if (countMinesOnField == countClosedTiles - 1 && !gameObject.isMine) {
+            win();
         }
-        countMineNeighbors();
+
+        if (!isGameStopped && !gameObject.isOpen && !gameObject.isFlag) {
+            gameObject.isOpen = true;
+            countClosedTiles--;
+
+            if (!gameObject.isMine) {
+                score += 5;
+                setScore(score);
+            }
+
+            if (gameObject.isMine) { //если в ячейке мина
+                setCellValueEx(x, y, Color.RED, MINE);
+                gameOver();
+            } else if (gameObject.countMineNeighbors == 0) { // если не мина и нету мин соседей
+
+                setCellValue(gameObject.x, gameObject.y, "");
+                List<GameObject> neighbors = getNeighbors(gameObject);
+                for (GameObject neighbor : neighbors) {
+                    if (!neighbor.isOpen) {
+                        openTile(neighbor.x, neighbor.y);
+                    }
+                }
+            } else {
+                setCellNumber(x, y, gameObject.countMineNeighbors);
+            }
+            setCellColor(x, y, Color.GREEN);
+
+        } else {
+            return;
+        }
+
+    }
+
+    private void createGame() {// отрисовка матрицы на отображении
+
+//        for (int y = 0; y < SIDE; y++) {
+//                for (int x = 0; x < SIDE; x++) {
+//                    setCellValue(x, y, "");
+//                }
+//            }
+        if (!isGameStopped){
+            for (int y = 0; y < SIDE; y++) {
+                for (int x = 0; x < SIDE; x++) {
+                    setCellValue(x, y, ""); //удаление старых значений
+
+                    /* метод getRandomNumber(int n) класса Game,
+                    который возвращает случайное число от 0 до n-1 включительно.
+                    Следовательно, вероятность генерации определенного числа равна 1/n.*/
+                    boolean isMine = getRandomNumber(10) < 1; //генерация мин
+                    if (isMine) {
+                        countMinesOnField++; // подсчет количества сгенерированных мин
+                    }
+                    gameField[y][x] = new GameObject(x, y, isMine);
+                    setCellColor(x, y, Color.ORANGE);
+                }
+            }
+            countMineNeighbors();
+
+        /*Согласно правилам игры, в помощь игроку даются флаги. Они нужны,
+        чтобы помечать потенциально "заминированные" ячейки. Поэтому количество
+         флагов countFlags должно равняться количеству мин countMinesOnField.*/
+            countFlags = countMinesOnField;
+        }
     }
 
     private List<GameObject> getNeighbors(GameObject gameObject) {
@@ -91,6 +171,27 @@ public class MinesweeperGame extends Game {
                             .filter(g -> g.isMine)
                             .count();
                 }
+            }
+        }
+    }
+
+    private void markTile(int x, int y) {
+        if (!isGameStopped) {
+
+            if (gameField[y][x].isOpen || countFlags == 0 && !gameField[y][x].isFlag) {
+                return;
+            } else if (!(gameField[y][x].isFlag)) {
+                gameField[y][x].isFlag = true;
+                countFlags--;
+                setCellValue(x, y, FLAG);
+                setCellColor(x, y, Color.AZURE);
+                return;
+            } else if (gameField[y][x].isFlag) {
+                countFlags++;
+                setCellValue(x, y, "");
+                gameField[y][x].isFlag = false;
+                setCellColor(x, y, Color.ORANGE);
+                return;
             }
         }
     }
