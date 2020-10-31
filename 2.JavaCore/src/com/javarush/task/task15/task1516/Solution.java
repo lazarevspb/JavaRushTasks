@@ -18,14 +18,14 @@ public class Solution {
         Solution solution = new Solution();
 
         {
-            System.out.printf("%d\n%f\n%f\n%b\n%d\n%d\n%d",
-                    solution.intVar,
-                    solution.doubleVar,
-                    solution.DoubleVar,
-                    solution.booleanVar,
-                    solution.ObjectVar,
-                    solution.ExceptionVar,
-                    solution.StringVar);
+//            System.out.printf("%d\n%f\n%f\n%b\n%d\n%d\n%d",
+            System.out.println(solution.intVar);
+            System.out.println(solution.doubleVar);
+            System.out.println(solution.DoubleVar);
+            System.out.println(solution.booleanVar);
+            System.out.println(solution.ObjectVar);
+            System.out.println(solution.ExceptionVar);
+            System.out.println(solution.StringVar);
 
         }
     }
