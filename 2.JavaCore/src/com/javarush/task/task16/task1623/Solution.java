@@ -13,23 +13,16 @@ public class Solution {
     }
 
     public static class GenerateThread extends Thread{
-
-
      public GenerateThread() {
-
-
             super(String.valueOf(++createdThreadCount));
             start();
 //            System.out.println(createdThreadCount);
-
         }
 
         @Override
         public void run() {
-            if(createdThreadCount <= count-1) {
-
+            if(createdThreadCount < count) {
                 System.out.println (new GenerateThread());
-
             }
         }
 
