@@ -43,7 +43,7 @@ public class Solution {
 
     public static class ReaderThread extends Thread {
         private List<String> result = new ArrayList<String>();
-           Object obj = new Object();
+          final Object obj = new Object();
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
