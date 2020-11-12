@@ -22,7 +22,31 @@ public class EnemyFleet {
     }
 
 
-    public void draw(Game game){
+
+    private double getRightBorder() {
+        double max = 0;
+        max = ships.get(0).x + ships.get(0).width;
+        for (int i = 0; i < ships.size(); i++) {
+            if (ships.get(i).x + ships.get(i).width > max) {
+                max = ships.get(i).x + ships.get(i).width;
+            }
+        }
+        return max;
+    }
+
+    private double getLeftBorder() {
+        double min = 0;
+        min = ships.get(0).x;
+        for (int i = 0; i < ships.size(); i++) {
+            if (ships.get(i).x < min) {
+                min = ships.get(i).x;
+            }
+        }
+        return min;
+    }
+
+
+    public void draw(Game game) {
         for (int i = 0; i < ships.size(); i++) {
             ships.get(i).draw(game);
         }
@@ -32,10 +56,10 @@ public class EnemyFleet {
     private void createShips() {
         ships = new ArrayList<>();
 
-        for (int y = 0; y < ROWS_COUNT ; y++) {
+        for (int y = 0; y < ROWS_COUNT; y++) {
             for (int x = 0; x < COLUMNS_COUNT; x++) {
 
-            ships.add(new EnemyShip(x * STEP, y * STEP + 12));
+                ships.add(new EnemyShip(x * STEP, y * STEP + 12));
             }
         }
     }
