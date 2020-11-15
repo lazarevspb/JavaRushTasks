@@ -22,6 +22,11 @@ public class SpaceInvadersGame extends Game {
 //        System.out.println(Color.values()[new  matrix[y][x]]);
     }
 
+    private void moveSpaceObjects() {
+        enemyFleet.move();
+    }
+
+
     private void createStars() {
         stars = new ArrayList<Star>();
 
@@ -60,6 +65,7 @@ public class SpaceInvadersGame extends Game {
 
     @Override
     public void onTurn(int step) {
+        moveSpaceObjects();
         drawScene();
     }
 }
