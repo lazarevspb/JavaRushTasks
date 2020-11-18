@@ -20,6 +20,14 @@ public class EnemyFleet {
     private List<EnemyShip> ships;
     private Direction direction = Direction.RIGHT;
 
+    public Bullet fire(Game game){
+        if (ships.size() == 0 ) return null;
+        if(game.getRandomNumber(100 / SpaceInvadersGame.COMPLEXITY) > 0) return null;
+        game.getRandomNumber(ships.size()-1);
+       return ships.get(game.getRandomNumber(ships.size())).fire();
+
+    }
+
     public EnemyFleet() {
         createShips();
     }

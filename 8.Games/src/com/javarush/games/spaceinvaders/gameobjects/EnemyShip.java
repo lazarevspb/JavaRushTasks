@@ -5,6 +5,11 @@ import com.javarush.games.spaceinvaders.ShapeMatrix;
 
 public class EnemyShip extends Ship {
 
+    @Override
+    public Bullet fire() {
+        return new Bullet(x+1, y+height, Direction.DOWN);
+    }
+
     public EnemyShip(double x, double y) {
         super(x, y);
         setStaticView(ShapeMatrix.ENEMY);
