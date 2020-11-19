@@ -7,6 +7,9 @@ public class Bullet extends GameObject{
     private  int dy;
     public boolean isAlive = true;
 
+    public void kill(){
+        isAlive = false;
+    }
 
     public Bullet(double x, double y, Direction direction) {
         super(x, y);
