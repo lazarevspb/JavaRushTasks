@@ -3,10 +3,28 @@ package com.javarush.games.spaceinvaders.gameobjects;
 import com.javarush.games.spaceinvaders.ShapeMatrix;
 import com.javarush.games.spaceinvaders.SpaceInvadersGame;
 
-public class PlayerShip extends Ship{
+import java.util.List;
+
+public class PlayerShip extends Ship {
 
     public PlayerShip() {
         super(SpaceInvadersGame.WIDTH / 2.0, SpaceInvadersGame.HEIGHT - ShapeMatrix.PLAYER.length - 1);
         setStaticView(ShapeMatrix.PLAYER);
+    }
+
+    public void verifyHit(List<Bullet> bullets) {
+        if (bullets.isEmpty()) {
+            return;
+        }
+        if (this.isAlive) {
+            for (int i = 0; i < bullets.size(); i++) {
+                if (bullets.get(i).isAlive) {
+                    if (isCollision(bullets.get(i))) {
+                        kill();
+                        bullets.get(i).kill();
+                    }
+                }
+            }
+        }
     }
 }
