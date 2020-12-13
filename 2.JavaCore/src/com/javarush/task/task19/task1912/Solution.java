@@ -13,9 +13,6 @@ public class Solution {
     /*Если заменить ByteArrayOutputStream object на другой но с типом OutputStream
     (например, FileOutputStrean object), то после вызова метода testString.printSomething();
     текст будет записан в файл.
-
-
-
     */
 
     public static void main(String[] args) {
