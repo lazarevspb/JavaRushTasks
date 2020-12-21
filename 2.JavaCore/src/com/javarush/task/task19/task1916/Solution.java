@@ -62,7 +62,6 @@ public class Solution {
                 }
                 //REMOVED
                 else {
-
                     removed(original, currentItemOriginal, Type.REMOVED);
                 }
             }
