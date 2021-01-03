@@ -4,8 +4,6 @@ package com.javarush.task.task21.task2101;
 Определяем адрес сети
 */
 
-import java.util.Arrays;
-
 public class Solution {
     public static void main(String[] args) {
         byte[] ip = new byte[]{(byte) 192, (byte) 168, 1, 2};
@@ -29,7 +27,7 @@ public class Solution {
         StringBuilder s = new StringBuilder();
 
         for (byte b : bytes) {
-            s.append(String.format("%8s", Integer.toBinaryString(b & 255)).replace(" ", "0") + " ");
+            s.append(String.format("%8s", Integer.toBinaryString(b & 255)).replace(" ", "0")).append(" ");
         }
         System.out.println(s);
     }
