@@ -7,10 +7,32 @@ import com.javarush.games.spaceinvaders.SpaceInvadersGame;
 import java.util.List;
 
 public class PlayerShip extends Ship {
-  private   Direction direction = Direction.UP;
+    private Direction direction = Direction.UP;
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public PlayerShip() {
+        super(SpaceInvadersGame.WIDTH / 2.0, SpaceInvadersGame.HEIGHT - ShapeMatrix.PLAYER.length - 1);
+        setStaticView(ShapeMatrix.PLAYER);
+    }
+
+    public void move() {
+        if (isAlive == false) return;
+
+        if (direction == Direction.RIGHT) {
+            this.x++;
+        } else if (direction == Direction.LEFT) {
+            this.x--;
+        }
+        if (this.x < 0) x = 0;
+        if (this.x + width > SpaceInvadersGame.WIDTH) this.x = SpaceInvadersGame.WIDTH - width;
+
+    }
 
     public void setDirection(Direction newDirection) {
-       if (newDirection != Direction.DOWN){
+        if (newDirection != Direction.DOWN) {
             this.direction = newDirection;
         }
     }
@@ -24,13 +46,6 @@ public class PlayerShip extends Ship {
                 ShapeMatrix.KILL_PLAYER_ANIMATION_SECOND,
                 ShapeMatrix.KILL_PLAYER_ANIMATION_THIRD,
                 ShapeMatrix.DEAD_PLAYER);
-    }
-
-
-
-    public PlayerShip() {
-        super(SpaceInvadersGame.WIDTH / 2.0, SpaceInvadersGame.HEIGHT - ShapeMatrix.PLAYER.length - 1);
-        setStaticView(ShapeMatrix.PLAYER);
     }
 
     public void verifyHit(List<Bullet> bullets) {

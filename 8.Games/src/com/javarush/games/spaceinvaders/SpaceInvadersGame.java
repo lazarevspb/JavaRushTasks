@@ -24,6 +24,18 @@ public class SpaceInvadersGame extends Game {
 
 
     @Override
+    public void onKeyReleased(Key key) {
+        super.onKeyReleased(key);
+
+       if (key == Key.LEFT && playerShip.getDirection() == Direction.LEFT) {
+            playerShip.setDirection(Direction.UP);
+        } else   if (key == Key.RIGHT && playerShip.getDirection() == Direction.RIGHT) {
+           playerShip.setDirection(Direction.UP);
+    }
+
+}
+
+    @Override
     public void initialize() {
         setScreenSize(WIDTH, HEIGHT);
         createGame();
@@ -37,8 +49,11 @@ public class SpaceInvadersGame extends Game {
             return;
         }
 //        else if (key == Key.SPACE) { createGame(); }
-        else if (key == Key.LEFT) { playerShip.setDirection(Direction.LEFT); }
-        else if (key == Key.RIGHT) { playerShip.setDirection(Direction.RIGHT); }
+        else if (key == Key.LEFT) {
+            playerShip.setDirection(Direction.LEFT);
+        } else if (key == Key.RIGHT) {
+            playerShip.setDirection(Direction.RIGHT);
+        }
     }
 
     private void stopGameWithDelay() {
@@ -69,6 +84,7 @@ public class SpaceInvadersGame extends Game {
     private void moveSpaceObjects() {
         enemyFleet.move();
         enemyBullets.forEach(Bullet::move);
+        playerShip.move();
     }
 
 

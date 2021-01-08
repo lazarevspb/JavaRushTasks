@@ -15,6 +15,7 @@ import java.util.List;
 
 public class Solution {
     public static List<Pair> result = new LinkedList<>();
+    public static List<String> nonRepetitions = new LinkedList<>();
     public static List<String> sArr = new ArrayList<>();
 
 
