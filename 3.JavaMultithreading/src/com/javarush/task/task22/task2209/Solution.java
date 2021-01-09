@@ -16,8 +16,8 @@ public class Solution {
 
 //        StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(reader.readLine())))) {
-//             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream("file0")))) {
+//             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(reader.readLine())))) {
+             BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream("file0")))) {
             while (fileReader.ready()) {
                 list.add(fileReader.readLine());
             }
@@ -49,55 +49,74 @@ public class Solution {
         if (words.length <= 1 ) return builder;
 
         List<String> list = new ArrayList<>(Arrays.asList(words));
-        List<String> list = new ArrayList<>(Arrays.asList(words));
+        List<String> reultList = new ArrayList<>();
 
 
         int count = 0;
         int countSearch = 1;
-        while (list.size() != 0) {
+        int size = list.size();
+        while (!(size == reultList.size())) {
             char endCharFirstString;
 
-            if (builder.length() == 0) {
-                endCharFirstString = Character.toLowerCase(list.get(0).charAt(list.get(0).length() - 1));
-            } else endCharFirstString = Character.toLowerCase(builder.charAt(builder.length() - 2));
-            char firstCharSecondString = Character.toLowerCase(list.get(countSearch).charAt(0));
-
-            if (endCharFirstString == firstCharSecondString) {
-                String firstWord;
-                String secondWord;
-                secondWord = list.get(countSearch);
-
-                if (builder.length() == 0) {
-                    firstWord = list.get(0);
-                    builder.append(firstWord).append(" ").append(secondWord).append(" ");
-                    list.remove(firstWord);
-                } else {
-                    secondWord = list.get(countSearch);
-                    builder.append(secondWord).append(" ");
-                }
-
-
-                list.remove(secondWord);
-//                count = 0;
-                countSearch = 0;
+            if (reultList.size() == 0) {
+                endCharFirstString = Character.toLowerCase(list.get(count).charAt(list.get(count).length() - 1));
+//            } else endCharFirstString = Character.toLowerCase(builder.charAt(builder.length() - 2));
             } else {
-                countSearch++;
+                String s = reultList.get(reultList.size()-1);
+                endCharFirstString = Character.toLowerCase(s.charAt(s.length()-1));
+            }
+            if(list.size() > 0){
+                String s = list.get(countSearch);
+            char firstCharSecondString = Character.toLowerCase(s.charAt(0));
+                if (endCharFirstString == firstCharSecondString) {
+                    String firstWord;
+                    String secondWord;
+                    secondWord = list.get(countSearch);
 
-                if (countSearch == list.size()) {
-                    count++;
+                    if (builder.length() == 0) {
+                        firstWord = list.get(0);
+                        reultList.add(firstWord);
+                        reultList.add(secondWord);
+                        list.remove(firstWord);
+                    } else {
+                        secondWord = list.get(countSearch);
+                        reultList.add(secondWord);
+                    }
+
+
+                    list.remove(secondWord);
+//                count = 0;
                     countSearch = 0;
-                    if (count == 3)
-                        break;
-                }
+                } else {
+                    countSearch++;
 
+                    if (countSearch == list.size()) {
+                        count++;
+                        countSearch = 0;
+                        list.addAll(reultList);
+                        reultList.clear();
+//                    if (count == 3)
+//                        break;
+                    }
+
+                }
+            } else {
+                count++;
+                countSearch = 0;
+                list.addAll(reultList);
+                reultList.clear();
             }
 
+
+
             if (list.size() == 1) {
-                builder.append(list.get(0));
-                list.remove(list.get(0));
+//                reultList.add();
+//                list.remove(list.get(0));
             }
 
         }
+        System.out.println("list" +  list);
+        System.out.println("reultList" + reultList);
         return builder;
     }
 }
