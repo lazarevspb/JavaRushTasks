@@ -13,7 +13,6 @@ public class Room {
     private Snake snake;
     private Mouse mouse;
 
-
     public Room(int width, int height, Snake snake) {
         this.width = width;
         this.height = height;
@@ -151,7 +150,6 @@ public class Room {
         game.createMouse();
         game.run();
     }
-
 
     private int initialDelay = 520;
     private int delayStep = 20;
