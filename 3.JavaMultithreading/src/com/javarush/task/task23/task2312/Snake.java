@@ -9,6 +9,25 @@ public class Snake {
     private SnakeDirection direction;
 
     void move() {
+        if (!isAlive) {
+            return;
+        }
+        if (direction == SnakeDirection.UP) {
+            move(0, -1);
+        }
+        if (direction == SnakeDirection.RIGHT) {
+            move(1, 0);
+        }
+        if (direction == SnakeDirection.DOWN) {
+            move(0, 1);
+        }
+        if (direction == SnakeDirection.LEFT) {
+            move(-1, 0);
+        }
+    }
+
+    void move(int x, int y) {
+
     }
 
     public Snake(int x, int y) {
