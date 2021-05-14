@@ -1,0 +1,39 @@
+import java.util.Collections;
+import java.util.stream.*;
+import java.util.stream.IntStream;
+
+public static void print(String s) {
+        Collections.nCopies(4, s + "\n").forEach(System.out::printf);
+    }
+
+         System.out.println(Stream.of(a, b)
+                    .reduce(Integer::sum)
+                    .get());
+
+            System.out.println(Stream.of(a, b)
+                    .reduce( (x,y) -> x * y)
+                    .get());
+
+                    Stream.of(a,b).min(Integer::compareTo).get();
+
+                    Минимум трёх чисел
+                     Stream.of(a,b,c).min(Comparator.comparingInt(o -> o)).get();
+
+                     рекурсивная сумма чисел
+                         private static int sum(int j){
+                             if (j <= 1) return 1;
+                             else  return IntStream.rangeClosed(1, j).reduce((x, y) -> x + y).getAsInt();
+
+                     //        if(j <= 1) return 1;
+                     //        else return sum(j - 1) + j;
+                         }
+
+
+                      Вывести на экран произведение 10 чисел от 1 до 10.
+                             private static int multiplicationOfTenNumbers(int f) {
+                                 if (f <= 1)
+                                     return 1;
+                                 else
+                                     return IntStream.rangeClosed(2, f)
+                                             .reduce((x, y) -> x * y)
+                                             .getAsInt();
